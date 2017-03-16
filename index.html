@@ -2,184 +2,32 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>D3 Page Template</title>
-        <style type="text/css">
-        .container {
-          font-family: sans-serif;
-          font-size: 24pt;
-          font-weight: bold;
-        }
-        </style>
+        <title>Jakub Czerny - D3 visualization</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
         <script type="text/javascript" src="d3/d3.js"></script>
+        <script type="text/javascript" src="utils/utils.js"></script>
+        <!-- <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css"> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
       <div class='container'>
-        <div id="message"></div>
-        <div id='visualization1'>
-          <button class='button'>Toggle</button>
+        <div id="headerScatterPlot" class='description'>
+          The following scatter plot represents two kinds of crimes in San Francisco. Each dot corresponds to one district of the city (which is given next to the dot), with its size being a ratio of crimes in a given district to the total number of crimes in SF.
+          The two included crimes are prostitution and theft, where the higher the dot is placed the more prostitution has been commited and respectively the more to the right the more thefts.
         </div>
-        <div id='visualization2'></div>
-        <script type="text/javascript">
+        <div id='scatterPlot'>
+          <button class='button'>Change year</button>
+        </div>
 
-          //Width and height
-          var w = window.innerWidth
-          var h = 400;
-          var padding = 50;
-          var offset = 10;
-          var barPadding = 1;
+        <div id="headerBarChart" class='description'>
+          This data comes again from San Francisco and is about driving under the incluence. The plot shows the distribution of it across different day time (grouped by hour) for years 2003-2016.
+        </div>
+        <div id='barChart'></div>
 
-          var path = 'data\\'
-          var file_2003 = 'data_2003.json'
-          var file_2015 = 'data_2015.json'
-          var dataset_2003 = null
-          var dataset_2015 = null
-          var selected = "2015"
+        <script type="text/javascript" src="scatterPlot.js"></script>
+        <script type="text/javascript" src="barChart.js"></script>
 
-
-
-          d3.select("#message")
-            .text("Data is being loaded..")
-
-          console.log("Loading data from 2003..")
-          d3.json(path+file_2003, function(error, data) {
-            if (error) {
-              console.log("Error while loading the data:\n"+error)
-            } else {
-              console.log("Data from 2003 has been loaded.");
-              dataset_2003 = data
-
-              console.log("Loading data from 2015..")
-              d3.json(path+file_2015, function(error, data) {
-                if (error) {
-                  console.log("Error while loading the data:\n"+error)
-                } else {
-                  console.log("Data from 2015 has been loaded.");
-                  dataset_2015 = data
-                  // dataset_2015
-                  initializeScatterPlot();
-                  generateVis2();
-                  hideLoadingMsg();
-                }
-              });
-            }
-          });
-
-
-          d3.select(".button")
-            .on("click", function() {
-                if(selected == "2003"){
-                  selected = "2015"
-                  updateScatterPlot(dataset_2015)
-                } else {
-                  selected = "2003"
-                  updateScatterPlot(dataset_2003)
-                }
-            });
-
-
-
-          var updateScatterPlot = function(dataset){
-            var data = getData(dataset)
-
-            circles = svgContainer.selectAll("circle")
-                             .data(data)
-                             .attr("cx", function(d) {
-                                 return scaleX(d[0][0]);
-                             })
-                             .attr("cy", function(d) {
-                                 return scaleY(d[0][1]);
-                             })
-                             .attr("r", function(d) {
-                                 var sum = d[0][0] + d[0][1]
-                                 return sum/total*100;
-                             })
-
-            labels = svgContainer.selectAll("text")
-                      			   .data(data)
-                      			   .text(function(d) {
-                      			   		return d[1];
-                      			   })
-                      			   .attr("x", function(d) {
-                      			   		return scaleX(d[0][0])+offset;
-                      			   })
-                      			   .attr("y", function(d) {
-                      			   		return scaleY(d[0][1])-offset;
-                      			   })
-                      			   .attr("font-family", "sans-serif")
-                      			   .attr("font-size", "12px")
-                      			   .attr("fill", "#179");
-        }
-
-          var initializeScatterPlot = function(){
-            var data_2003 = getData(dataset_2003)
-            var data_2015 = getData(dataset_2015)
-            data = data_2003.concat(data_2015)
-
-            scaleY = d3.scaleLinear()
-                           .domain([d3.min(data, function(d) { return d[0][1]; }), d3.max(data, function(d) { return d[0][1]; })])
-                           .range([padding, h-padding])
-
-            scaleX = d3.scaleLinear()
-                            .domain([d3.min(data, function(d) { return d[0][0]; }), d3.max(data, function(d) { return d[0][0]; })])
-                            .range([padding, w-padding*2])
-
-            if(selected = "2015"){
-                data_init = data_2015
-                dataset = dataset_2015
-            } else {
-                data_init = data_2003
-                dataset = dataset_2003
-            }
-
-            svgContainer = d3.select("#visualization1").append("svg")
-                                               .attr("width", w)
-                                               .attr("height", h);
-
-            circles = svgContainer.selectAll("circle")
-                                  .data(data_init)
-                                  .enter()
-                                  .append("circle");
-
-            labels = svgContainer.selectAll("text")
-                     			   .data(data_init)
-                     			   .enter()
-                     			   .append("text")
-
-             updateScatterPlot(dataset)
-
-          }
-
-          var hideLoadingMsg = function(){
-            d3.select("#message").remove()
-          }
-
-          var generateVis2 = function(){
-
-          }
-
-          function add(a, b) {
-              return a+b
-          }
-
-          function getData(dataset){
-              var values = d3.values(dataset)
-              var crimesDistrict = []
-              for(var i=0; i<values.length; i++){
-                crimesDistrict[i] = values[i][0] + values[i][1]
-              }
-              total = crimesDistrict.reduce(add,0);
-              var keys   = d3.keys(dataset)
-              var data = []
-              for(var i=0; i<values.length; i++){
-                data.push([values[i], keys[i]])
-              }
-
-              return data
-          }
-
-        </script>
       </div>
     </body>
 </html>
