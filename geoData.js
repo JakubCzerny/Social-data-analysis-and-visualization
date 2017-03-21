@@ -50,28 +50,32 @@ var updateMap = function(){
   circles = svgContainer.selectAll("circle")
                         .data(dataset)
                         .attr('fill', function(d){
-                          return colours[d[1][k]]
+                          if(k==-1)
+                            return "white"
+                          else
+                            return colours[d[1][k]]
                         })
 
-   svgContainer.selectAll(".centroid").remove()
-   centroid_circles = svgContainer.selectAll(".centroid")
-                                  .data(centroids[k])
-                                  .enter()
-                                  .append("circle")
-                                  .attr('class', "centroid")
-                                  .attr("cx", function(d) {
-                                    return projection(d)[0]
-                                   })
-                                  .attr("cy", function(d) {
-                                    return projection(d)[1]
-                                  })
-                                  .attr("r", '10')
-                                  .attr('fill', function(d,i){
-                                    return colours[i]
-                                  })
-                                  .attr('stroke-width', '3')
-                                  .attr('stroke', 'black')
 
+   svgContainer.selectAll(".centroid").remove()
+   if( k != -1)
+     centroid_circles = svgContainer.selectAll(".centroid")
+                                    .data(centroids[k])
+                                    .enter()
+                                    .append("circle")
+                                    .attr('class', "centroid")
+                                    .attr("cx", function(d) {
+                                      return projection(d)[0]
+                                     })
+                                    .attr("cy", function(d) {
+                                      return projection(d)[1]
+                                    })
+                                    .attr("r", '10')
+                                    .attr('fill', function(d,i){
+                                      return colours[i]
+                                    })
+                                    .attr('stroke-width', '3')
+                                    .attr('stroke', 'black')
 }
 
 
@@ -107,24 +111,6 @@ var plotMap = function(){
                             return 2;
                           })
                           .attr('fill', function(d){
-                            return colours[d[1][k]]
+                            return 'white'
                           })
-
-    centroid_circles = svgContainer.selectAll(".centroid")
-                            .data(centroids[k])
-                            .enter()
-                            .append("circle")
-                            .attr('class', "centroid")
-                            .attr("cx", function(d) {
-                              return projection(d)[0]
-                             })
-                            .attr("cy", function(d) {
-                              return projection(d)[1]
-                            })
-                            .attr("r", '10')
-                            .attr('fill', function(d,i){
-                              return colours[i]
-                            })
-                            .attr('stroke-width', '3')
-                            .attr('stroke', 'black')
 }
