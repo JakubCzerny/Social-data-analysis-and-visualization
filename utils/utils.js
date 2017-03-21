@@ -7,9 +7,6 @@ getData = function(dataset){
     var values = d3.values(dataset)
     var keys   = d3.keys(dataset)
     var data   = []
-
-
-
     var centroids = []
     var counter   = []
 
@@ -39,7 +36,6 @@ getData = function(dataset){
         }
       }
     }
-    console.log(centroids);
 
     for(var i=0; i<no_options; i++){
       for(var j=0; j<=i+1; j++){
@@ -47,7 +43,6 @@ getData = function(dataset){
         centroids[i][j][1] = centroids[i][j][1] / counter[i][j]
       }
     }
-    console.log(counter)
-    console.log(centroids);
+
     return {"data": data, "centroids": centroids}
 }

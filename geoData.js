@@ -60,7 +60,6 @@ var updateMap = function(){
                                   .append("circle")
                                   .attr('class', "centroid")
                                   .attr("cx", function(d) {
-                                    console.log("HERE");
                                     return projection(d)[0]
                                    })
                                   .attr("cy", function(d) {
