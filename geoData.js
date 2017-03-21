@@ -30,7 +30,6 @@ d3.json(url, function (error, json) {
         tmp = getData(data)
         dataset = tmp["data"]
         centroids = tmp["centroids"]
-        console.log(dataset);
         no_points = dataset.length
         plotMap()
       }
@@ -49,28 +48,31 @@ d3.select(".buttons")
 
 var updateMap = function(){
   circles = svgContainer.selectAll("circle")
-         .data(dataset)
-         .attr('fill', function(d){
-           return colours[d[1][k]]
-         })
+                        .data(dataset)
+                        .attr('fill', function(d){
+                          return colours[d[1][k]]
+                        })
 
-// GET THE CEONTROIDS
-  //  centroids = svgContainer.selectAll(".centroid")
-  //                          .data(dataset.slice(idx1, idx2))
-  //                          .attr('class', "centroid")
-  //                          .attr("cx", function(d) {
-  //                            return projection(d[0])[0]
-  //                           })
-  //                          .attr("cy", function(d) {
-  //                            return projection(d[0])[1]
-  //                          })
-  //                          .attr("r", '10')
-  //                          .attr('stroke', function(d){
-  //                            console.log(d);
-  //                            return colours[d[1][k]]
-  //                          })
-  //                          .attr('stroke-width', '5')
-  //                          .attr('fill', 'none')
+   svgContainer.selectAll(".centroid").remove()
+   centroid_circles = svgContainer.selectAll(".centroid")
+                                  .data(centroids[k])
+                                  .enter()
+                                  .append("circle")
+                                  .attr('class', "centroid")
+                                  .attr("cx", function(d) {
+                                    console.log("HERE");
+                                    return projection(d)[0]
+                                   })
+                                  .attr("cy", function(d) {
+                                    return projection(d)[1]
+                                  })
+                                  .attr("r", '10')
+                                  .attr('fill', function(d,i){
+                                    return colours[i]
+                                  })
+                                  .attr('stroke-width', '3')
+                                  .attr('stroke', 'black')
+
 }
 
 
@@ -87,7 +89,10 @@ var plotMap = function(){
               .enter()
               .append("path")
               .attr("d", path)
-              .style('fill', '#179');
+              .style('fill', function(d,i){
+                // We could create a scheme with pale colours and use diff. colour for each distric
+                  return '#179'
+              });
 
     circles = svgContainer.selectAll("circle")
                           .data(dataset)
@@ -106,28 +111,21 @@ var plotMap = function(){
                             return colours[d[1][k]]
                           })
 
-      centroids = svgContainer.selectAll(".centroid")
-                            .data(centroids)
+    centroid_circles = svgContainer.selectAll(".centroid")
+                            .data(centroids[k])
                             .enter()
                             .append("circle")
                             .attr('class', "centroid")
                             .attr("cx", function(d) {
-                              console.log(d);
-                              return projection(d[0])[0]
+                              return projection(d)[0]
                              })
                             .attr("cy", function(d) {
-                              return projection(d[0])[1]
+                              return projection(d)[1]
                             })
                             .attr("r", '10')
-                            .attr('stroke', function(d){
-                              return colours[d[1][k]]
+                            .attr('fill', function(d,i){
+                              return colours[i]
                             })
-                            .attr('stroke-width', '5')
-                            .attr('fill', 'none')
-
-
-                            // border: 2px solid red;
-                            // .attr('border-color', function(d){
-                            //   return colours[d[1][k]]
-                            // })
+                            .attr('stroke-width', '3')
+                            .attr('stroke', 'black')
 }
