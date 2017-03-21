@@ -4,16 +4,21 @@ add = function(a, b) {
 
 getData = function(dataset){
     var values = d3.values(dataset)
-    var crimesDistrict = []
-    for(var i=0; i<values.length; i++){
-      crimesDistrict[i] = values[i][0] + values[i][1]
-    }
-    total = crimesDistrict.reduce(add,0);
     var keys   = d3.keys(dataset)
-    var data = []
-    for(var i=0; i<values.length; i++){
-      data.push([values[i], keys[i]])
-    }
+    var data   = []
+    var centroids = [
+      new Array(2).fill(0),
+      new Array(3).fill(0),
+      new Array(4).fill(0),
+      new Array(5).fill(0),
+      new Array(6).fill(0)
+    ]
 
-    return data
+    for(var key in dataset){
+      if(dataset.hasOwnProperty(key)){
+        var clusters = dataset[key]
+        data.push([JSON.parse(key),clusters])
+      }
+    }
+    return {"data": data, "centroids": centroids}
 }
