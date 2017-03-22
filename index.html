@@ -10,17 +10,26 @@
     </head>
     <body>
       <div class='container'>
-        <div id="header" class='description'></div>
-        <div id='map'></div>
-        <div class='buttons'>
-          <button class="button" value=1> No clusters </button>
-          <button class="button" value=2> k = 2 </button>
-          <button class="button" value=3> k = 3 </button>
-          <button class="button" value=4> k = 4 </button>
-          <button class="button" value=5> k = 5 </button>
-          <button class="button" value=6> k = 6 </button>
+
+        <div class='wrapper'>
+          <div id="header" class='description'></div>
+          <div id='map'></div>
+          <div class='buttons'>
+            <button class="button" value=1> No clusters </button>
+            <button class="button" value=2> k = 2 </button>
+            <button class="button" value=3> k = 3 </button>
+            <button class="button" value=4> k = 4 </button>
+            <button class="button" value=5> k = 5 </button>
+            <button class="button" value=6> k = 6 </button>
+          </div>
+          <script type="text/javascript" src="geoData.js"></script>
         </div>
-        <script type="text/javascript" src="geoData.js"></script>
+
+        <div class='wrapper'>
+          <div id='warmup'></div>
+          <script type="text/javascript" src="warmUp.js"></script>
+        </div>
+
       </div>
     </body>
 </html>
