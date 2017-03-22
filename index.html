@@ -6,6 +6,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
         <script type="text/javascript" src="d3/d3.js"></script>
         <script type="text/javascript" src="utils/utils.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
@@ -23,6 +24,27 @@
             <button class="button" value=6> k = 6 </button>
           </div>
           <script type="text/javascript" src="geoData.js"></script>
+        </div>
+
+        <div class='wrapper'>
+          <div class='container'>
+            <div id="headerScatterPlot" class='description'>
+              The following scatter plot represents two kinds of crimes in San Francisco. Each dot corresponds to one district of the city (which is given next to the dot), with its size being a ratio of crimes in a given district to the total number of crimes in SF.
+              The two included crimes are prostitution and theft, where the higher the dot is placed the more prostitution has been commited and respectively the more to the right the more thefts.
+            </div>
+            <div id='scatterPlot'>
+              <button class='button' id="changeYearButton">Change year</button>
+            </div>
+
+            <div id="headerBarChart" class='description'>
+              This data comes again from San Francisco and is about driving under the incluence. The plot shows the distribution of it across different day time (grouped by hour) for years 2003-2016.
+            </div>
+            <div id='barChart'></div>
+
+            <script type="text/javascript" src="scatterPlot.js"></script>
+            <script type="text/javascript" src="barChart.js"></script>
+
+          </div>
         </div>
 
         <div class='wrapper'>

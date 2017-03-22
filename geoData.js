@@ -1,6 +1,6 @@
 var padding = 50;
-var w = window.innerWidth - padding
-var h = 600;
+var widthGeo = window.innerWidth - padding
+var heightGeo = 600;
 
 // Data
 var map = null
@@ -27,7 +27,7 @@ d3.json(url, function (error, json) {
         console.log("Error while loading the data:\n"+error)
       } else {
         console.log("Data has been loaded.")
-        tmp = getData(data)
+        tmp = getDataGeo(data)
         dataset = tmp["data"]
         centroids = tmp["centroids"]
         no_points = dataset.length
@@ -47,7 +47,7 @@ d3.select(".buttons")
 });
 
 var updateMap = function(){
-  circles = svgContainer.selectAll("circle")
+  circlesGeo = svgContainerGeo.selectAll("circle")
                         .data(dataset)
                         .attr('fill', function(d){
                           if(k==-1)
@@ -57,9 +57,9 @@ var updateMap = function(){
                         })
 
 
-   svgContainer.selectAll(".centroid").remove()
+   svgContainerGeo.selectAll(".centroid").remove()
    if( k != -1)
-     centroid_circles = svgContainer.selectAll(".centroid")
+     centroidCirclesGeo = svgContainerGeo.selectAll(".centroid")
                                     .data(centroids[k])
                                     .enter()
                                     .append("circle")
@@ -80,14 +80,14 @@ var updateMap = function(){
 
 
 var plotMap = function(){
-  projection = d3.geoAlbersUsa().fitSize([w, h], map);
+  projection = d3.geoAlbersUsa().fitSize([widthGeo, heightGeo], map);
   path.projection(projection)
 
-  svgContainer = d3.select("#map").append("svg")
-                         .attr("width", w)
-                         .attr("height", h+padding);
+  svgContainerGeo = d3.select("#map").append("svg")
+                         .attr("width", widthGeo)
+                         .attr("height", heightGeo+padding);
 
-   svgContainer.selectAll("path")
+   svgContainerGeo.selectAll("path")
               .data(map.features)
               .enter()
               .append("path")
@@ -97,7 +97,7 @@ var plotMap = function(){
                   return '#179'
               });
 
-    circles = svgContainer.selectAll("circle")
+    circlesGeo = svgContainerGeo.selectAll("circle")
                           .data(dataset)
                           .enter()
                           .append("circle")
