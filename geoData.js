@@ -4,7 +4,7 @@ var heightGeo = 600;
 
 // Data
 var map = null
-var dataset = null
+var datasetGeo = null
 var centroids = null
 var k = 0
 var no_points = 0
