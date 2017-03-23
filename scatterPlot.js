@@ -108,7 +108,7 @@ var initializeScatterPlot = function(){
                         .data(data_init)
                         .enter()
                         .append("circle")
-                        .attr("fill", "#64234d")
+                        .attr("fill", "#001190")
 
   labels = svgContainerScatter.selectAll(".crime-labels")
                    .data(data_init)
@@ -117,7 +117,7 @@ var initializeScatterPlot = function(){
                    .attr("font-family", "sans-serif")
                    .attr("font-size", "12px")
                    .attr('class', "crime-labels")
-                   .attr("fill", "#179");
+                   .attr("fill", "#000");
 
   datasetLabel = svgContainerScatter.append("text")
                               .text("Data from: "+selected)
@@ -126,7 +126,7 @@ var initializeScatterPlot = function(){
                               .attr("font-family", "sans-serif")
                               .attr("font-size", "12px")
                               .attr("id", 'label')
-                              .attr("fill", "#64234d")
+                              .attr("fill", "#001190")
 
    updateScatterPlot(dataset)
 
