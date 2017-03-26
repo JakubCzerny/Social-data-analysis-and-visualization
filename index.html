@@ -16,17 +16,29 @@
         <div class='wrapper'>
           <div id="headerScatterPlot" class='description'>
             The following scatter plot represents two kinds of crimes in San Francisco. Each dot corresponds to one district of the city (which is given next to the dot), with its size being a ratio of crimes in a given district to the total number of crimes in SF.
-            The two included crimes are prostitution and theft, where the higher the dot is placed the more prostitution has been commited and respectively the more to the right the more thefts.
+            The two included crimes are prostitution and theft, whereas the higher the dot is placed the more prostitution has been commited and respectively the more to the right the higher the amount of thefts.
+            Here, we present data from 2003 and 2015 and the view can be toggled by clicking the button 'Change year'.
           </div>
           <div id='scatterPlot'>
             <button class='button' id="changeYearButton">Change year</button>
           </div>
           <script type="text/javascript" src="scatterPlot.js"></script>
+          <div id="scatterQuestionExplanation" class='description'>
+            It should also be mentioned that the scales of the axes are the same for both years, and the reason for that is to make the vizualisations for 2 data sets comparable. By using the same scale we can see how certain crime
+            changed in a given district from 2003 to 2015 (by checking how high, how much to the right the dot is placed or simply by looking at the dot size)
+            If we have decided to use separate scales for both data sets this information would be gone and we could only infer about relative amount of crime for a given year that is still possible when using a single scale.
+            One may then think that this approach should always be prefered, but that's not entirely true. If we don't care about comparability between the data sets, it will be a better idea to scale them differently.
+            It's because the data will be most likely better spread across the plot as that's what scalling does. In our case if you look at year 2003, you can immediately notice that the data is distributed over the whole range
+            in X and Y directions (meaning the values from that year were used for defining the ranges) that is not the case of data set from 2015 that.
+          </div>
         </div>
 
         <h2 class='assignment-title'>Assignment 2B: Visualizing geodata</h2>
         <div class='wrapper'>
-          <div id="header" class='description'></div>
+          <div id="" class='description'>
+            This vizualisation presents prostitution distribution in San Francisco that is the default plot. By clicking one of the buttons below the plot you can apply clustering on that data with k being the number of clusters.
+            Moreover, the big dots denote the centroids of the clusters - the overall means of the clusters.
+          </div>
           <div id='map'></div>
           <div class='buttons'>
             <button class="button" value=1> No clusters </button>
@@ -36,6 +48,12 @@
             <button class="button" value=5> k = 5 </button>
             <button class="button" value=6> k = 6 </button>
           </div>
+          <div id="" class='description'>
+            Because we share the vizualisation over the network we should consider the size of the datasets that are being transferred. This is important aspect because we don't want to use a lot of resources when people load our
+            vizualisations which is an arguments by also affect the speed of loading. Consequently we were able to reduce the data set to 150kB (where our dataset has following pattern for each point (x,y): [k=2; k=3; k=4; k=5; k=6] ).
+            This way of representing the data requires however some data pre-processing on the client side before rendering. Namely, we slighly alter the format of the data before displaying and calculate the centroids of each cluster.
+            For efficiency we do it only once when loading the data, so when we switch between different number of clusters the transitions are smooth and quick as all the values are previously precalculated.
+          </div>
           <script type="text/javascript" src="geoData.js"></script>
         </div>
 
@@ -43,6 +61,7 @@
         <div class='wrapper'>
           <div id="headerBarChart" class='description'>
             This data comes again from San Francisco and is about driving under the incluence. The plot shows the distribution of it across different day time (grouped by hour) for years 2003-2016.
+            To make the plot even more visual, we used different gradients depending on the amount of the crimes. Additionally, when hoveing over the bars the colous of the number of crimes changes depending on whether it is below(green) or above(red) the average.
           </div>
           <div id='barChart'></div>
           <script type="text/javascript" src="barChart.js"></script>
