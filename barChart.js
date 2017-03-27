@@ -31,7 +31,6 @@ var generateBarChart = function(){
     data.push([i,tmp[i]])
     total += tmp[i]
   }
-
   var scaleY = d3.scaleLinear()
                  .domain([d3.min(data, function(d) { return d[1]; }), d3.max(data, function(d) { return d[1]; })])
                  .range([padding, height-padding])
@@ -69,8 +68,8 @@ var generateBarChart = function(){
             return scaleY(d[1])
         })
         .attr("fill", function(d) {
-            var blue = (d[1]/noElements*2)
-            var green = 255-(d[1]/noElements*10)
+            var blue = Math.round(d[1]/noElements*2)
+            var green = Math.round(255-(d[1]/noElements*10))
             return "rgb( 0 ,"+ green +","+ blue +" )";
         })
         .on("mouseover", function(d) { tip.show(d, document.getElementById("head")) })
